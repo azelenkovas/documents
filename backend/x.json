@@ -1,0 +1,44 @@
+{
+    "categorized_documents": [
+        {
+            "name": "category3_2.pdf",
+            "path": "http://localhost:8000/doc/category3_2.pdf",
+            "type": "pdf",
+            "category": "category3"
+        },
+        {
+            "name": "category2_2.pdf",
+            "path": "http://localhost:8000/doc/category2_2.pdf",
+            "type": "pdf",
+            "category": "category2"
+        },
+        {
+            "name": "category1_2.pdf",
+            "path": "http://localhost:8000/doc/category1_2.pdf",
+            "type": "pdf",
+            "category": "category1"
+        }
+    ],
+    "uncategorized_documents": [
+        {
+            "name": "uncategorized_7.pdf",
+            "path": "http://localhost:8000/doc/uncategorized_7.pdf",
+            "type": "pdf"
+        },
+        {
+            "name": "uncategorized_5.pdf",
+            "path": "http://localhost:8000/doc/uncategorized_5.pdf",
+            "type": "pdf"
+        },
+        {
+            "name": "uncategorized_0.pdf",
+            "path": "http://localhost:8000/doc/uncategorized_0.pdf",
+            "type": "pdf"
+        },
+        {
+            "name": "uncategorized_8.pdf",
+            "path": "http://localhost:8000/doc/uncategorized_8.pdf",
+            "type": "pdf"
+        }
+    ]
+}
