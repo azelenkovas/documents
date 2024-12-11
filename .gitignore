@@ -1,0 +1,51 @@
+# General
+.DS_Store
+Thumbs.db
+
+# Node.js
+node_modules/
+build/
+.env
+
+# TypeScript
+*.tsbuildinfo
+
+# React
+.cache/
+public/
+
+# Python
+__pycache__/
+*.py[cod]
+*.env
+venv/
+.env
+
+# FastAPI
+instance/
+*.db
+*.sqlite3
+
+# Logs and temp files
+*.log
+temp/
+*.swp
+
+# IDE Specific
+.idea/
+.vscode/
+*.code-workspace
+
+# OS-specific
+*.bak
+*.tmp
+
+# Testing
+coverage/
+.pytest_cache/
+htmlcov/
+
+# Docker
+*.pid
+docker-compose.override.yml
+
