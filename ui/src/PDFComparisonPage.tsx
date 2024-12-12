@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Container, Row, Col, Button, ButtonGroup } from "react-bootstrap";
 import { Document, Page } from "react-pdf";
 import { useLocation } from "react-router-dom";
-import { pdfjs } from 'react-pdf';
+import { pdfjs } from "react-pdf";
 import 'react-pdf/dist/Page/TextLayer.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 
-pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs'
+pdfjs.GlobalWorkerOptions.workerSrc = 
+  'pdf.worker.min.mjs';
 
 interface Check {
   category: string;

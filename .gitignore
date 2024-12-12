@@ -12,7 +12,6 @@ build/
 
 # React
 .cache/
-public/
 
 # Python
 __pycache__/
