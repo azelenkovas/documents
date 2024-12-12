@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const DocumentSelector = () => {
   interface Document {
@@ -7,13 +8,17 @@ const DocumentSelector = () => {
     type: string;
   }
 
-  interface Data {
-    categorized_documents: { [key: string]: Document[] };
-    uncategorized_documents: Document[];
+  interface CategorizedDocument extends Document { 
+    category: string;
   }
 
+  interface Data {
+    categorized_documents: { [key: string]: CategorizedDocument[] };
+    uncategorized_documents: Document[];
+  }
+  const navigate = useNavigate();
   const [data, setData] = useState<Data | null>(null);
-  const [selectedDocs, setSelectedDocs] = useState<{
+   const [selectedDocs, setSelectedDocs] = useState<{
     categorized: { [key: string]: string };
     uncategorized: string[];
   }>({
@@ -53,7 +58,27 @@ const DocumentSelector = () => {
 
   const handleSubmit = () => {
     console.log("Selected Documents:", selectedDocs);
-    // Submit the selectedDocs object to your server or handle as needed
+    let s = {
+      categorized_documents: selectedDocs.categorized,
+      uncategorized_documents: selectedDocs.uncategorized
+    }
+    const request: RequestInfo = new Request('/checks', {
+      // We need to set the `method` to `POST` and assign the headers
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      // Convert the user object to JSON and pass it as the body
+      body: JSON.stringify(s)
+    })
+  
+    // Send the request and print the response
+    return fetch(request)
+      .then((response) => response.json())
+      .then((json) => {
+        navigate('/pdf-comparison', { state: { checks: json } });
+      })
+      .then(() => console.log("Checks submitted successfully!"))
+      .catch((error) => console.error("Error submitting checks:", error));
+
   };
 
   if (!data) return <div>Loading...</div>;

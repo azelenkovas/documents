@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Button, ButtonGroup } from "react-bootstrap";
 import { Document, Page } from "react-pdf";
+import { useLocation } from "react-router-dom";
+import { pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+
+pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.mjs'
 
 interface Check {
   category: string;
@@ -23,10 +29,12 @@ interface Props {
   checks: Check[];
 }
 
-const PDFComparisonPage: React.FC<Props> = ({ checks }) => {
+const PDFComparisonPage = () => {
+  const location = useLocation();
+  const { checks } = location.state || {};
   const [selectedCheckIndex, setSelectedCheckIndex] = useState<number | null>(null);
   const [uncategorizedIndex, setUncategorizedIndex] = useState(0);
-
+  
   const handleCheckSelect = (index: number) => {
     setSelectedCheckIndex(index);
     setUncategorizedIndex(0); // Reset uncategorized document index
@@ -58,14 +66,14 @@ const PDFComparisonPage: React.FC<Props> = ({ checks }) => {
       <Row>
         {/* Left Column */}
         <Col md={2} className="bg-light border-right vh-100">
-          {checks.map((check, index) => (
+          {checks.map((check: Check, index: number) => (
             <Button
               key={index}
               className="w-100 mb-2"
               onClick={() => handleCheckSelect(index)}
               variant={selectedCheckIndex === index ? "primary" : "outline-primary"}
             >
-              {check.name}
+              <span>{check.name}</span>
             </Button>
           ))}
         </Col>
@@ -77,24 +85,35 @@ const PDFComparisonPage: React.FC<Props> = ({ checks }) => {
               <Row>
                 {/* Categorized Document */}
                 <Col md={6} className="border">
-                  <h5>Categorized Document</h5>
-                  <Document file={selectedCheck.categorized_document.path} loading={<div>Loading PDF...</div>}>
-                    <Page pageNumber={1} />
-                  </Document>
+                  <Row><h5>Categorized Document</h5></Row>
+                  <Row>
+                    <Col className="pdf-wrapper" style={{ maxHeight: '60vh', overflow: 'auto' }}>
+                      <Document file={selectedCheck.categorized_document.path} loading={<div>Loading PDF...</div>}>
+                        <Page pageNumber={1} />
+                      </Document>
+                    </Col>
+                  </Row>
                 </Col>
 
                 {/* Uncategorized Document */}
                 <Col md={6} className="border">
-                  <div className="d-flex justify-content-between align-items-center mb-2">
-                    <Button onClick={handlePrevUncategorized} variant="secondary">&lt;</Button>
-                    <h5>Uncategorized Document</h5>
-                    <Button onClick={handleNextUncategorized} variant="secondary">&gt;</Button>
-                  </div>
-                  {selectedUncategorizedDocument && (
-                    <Document file={selectedUncategorizedDocument.path} loading={<div>Loading PDF...</div>}>
-                      <Page pageNumber={1} />
-                    </Document>
-                  )}
+                  <Row>
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                      <Button onClick={handlePrevUncategorized} variant="secondary">&lt;</Button>
+                      <h5>Uncategorized Document</h5>
+                      <Button onClick={handleNextUncategorized} variant="secondary">&gt;</Button>
+                    </div>
+                  </Row>
+                  <Row>
+                    {selectedUncategorizedDocument && (
+                      <div className="pdf-wrapper" style={{ maxHeight: '60vh', overflow: 'auto' }}>
+
+                        <Document className="pdf-wrapper" file={selectedUncategorizedDocument.path} loading={<div>Loading PDF...</div>}>
+                          <Page pageNumber={1} />
+                        </Document>
+                      </div>
+                    )}
+                  </Row>
                 </Col>
               </Row>
 

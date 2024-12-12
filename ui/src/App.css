@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.sixtypercent {
+  height: ;
+}
+
+.pdf-col {
+  height: 500px; /* Or set to whatever height you prefer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: top;
+}
+
